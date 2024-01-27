@@ -75,6 +75,8 @@ CREATE TABLE public.ord_network_type (
 	CONSTRAINT ord_network_type_pk PRIMARY KEY (id)
 );
 
+INSERT INTO ord_network_type (network_type) VALUES 'mainnet'
+
 CREATE TABLE public.ord_indexer_version (
 	id bigserial NOT NULL,
 	indexer_version text NOT NULL,
