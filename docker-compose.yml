@@ -13,7 +13,7 @@ services:
       - POSTGRES_DB=${DB_DATABASE}
 
   main-index:
-    image: darren9276/opi-main-index:2024.01.26
+    image: darren9276/opi-main-index:2024.01.28
     networks:
       - ${EXTERNAL_NETWORK_NAME}
     volumes:
