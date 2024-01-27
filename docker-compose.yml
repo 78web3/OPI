@@ -16,6 +16,8 @@ services:
     image: darren9276/opi-main-index:2024.01.26
     networks:
       - ${EXTERNAL_NETWORK_NAME}
+    volumes:
+      - /data/bitcoin-data:/bitcoin-data
     depends_on:
       - db
     environment:
@@ -41,19 +43,23 @@ services:
     depends_on:
       - db
     environment:
-      - DB_USER="postgres"
-      - DB_HOST="localhost"
-      - DB_PORT="5432"
-      - DB_DATABASE="postgres"
-      - DB_PASSWD=""
-      - DB_METAPROTOCOL_USER="postgres"
-      - DB_METAPROTOCOL_HOST="localhost"
-      - DB_METAPROTOCOL_PORT="5432"
-      - DB_METAPROTOCOL_DATABASE="postgres"
-      - DB_METAPROTOCOL_PASSWD=""
-      - NETWORK_TYPE="mainnet"
-      - REPORT_TO_INDEXER="true"
-      - REPORT_URL="https://api.opi.network/report_block"
-      - REPORT_RETRIES="10"
-      - REPORT_NAME="opi_brc20_index"
-      - CREATE_EXTRA_TABLES="true"
+      - DB_USER=${DB_USER}
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_DATABASE=${DB_DATABASE}
+      - DB_PASSWD=${DB_PASSWD}
+      - DB_METAPROTOCOL_USER=${DB_METAPROTOCOL_USER}
+      - DB_METAPROTOCOL_HOST=${DB_METAPROTOCOL_HOST}
+      - DB_METAPROTOCOL_PORT=${DB_METAPROTOCOL_PORT}
+      - DB_METAPROTOCOL_DATABASE=${DB_METAPROTOCOL_DATABASE}
+      - DB_METAPROTOCOL_PASSWD=${DB_METAPROTOCOL_PASSWD}
+      - NETWORK_TYPE=${NETWORK_TYPE}
+      - REPORT_TO_INDEXER=${REPORT_TO_INDEXER}
+      - REPORT_URL=${REPORT_URL}
+      - REPORT_RETRIES=${REPORT_RETRIES}
+      - REPORT_NAME=${REPORT_NAME}
+      - CREATE_EXTRA_TABLES=${CREATE_EXTRA_TABLES}
+
+networks:
+  opi-2:
+    external: true
