@@ -17,7 +17,7 @@ services:
     networks:
       - ${EXTERNAL_NETWORK_NAME}
     volumes:
-      - /data/bitcoin-data:/bitcoin-data
+      - ${LOCAL_BITCOIN_CHAIN_FOLDER}:${BITCOIN_CHAIN_FOLDER}
     depends_on:
       - db
     environment:
