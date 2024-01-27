@@ -1,0 +1,34 @@
+FROM rust as rust-builder
+
+WORKDIR /build
+ADD . .
+# RUN ls -al
+RUN cd ord && cargo fetch
+RUN cd ord && cargo build --release
+
+
+FROM python:bookworm as brc20-indexer
+
+COPY --from=rust-builder /build /app
+
+ENV DB_USER="postgres"
+ENV DB_HOST="db"
+ENV DB_PORT=5432
+ENV DB_DATABASE="postgres"
+ENV DB_PASSWD=""
+ENV DB_METAPROTOCOL_USER="postgres"
+ENV DB_METAPROTOCOL_HOST="db"
+ENV DB_METAPROTOCOL_PORT=5432
+ENV DB_METAPROTOCOL_DATABASE="postgres"
+ENV DB_METAPROTOCOL_PASSWD=""
+ENV NETWORK_TYPE="mainnet"
+ENV REPORT_TO_INDEXER=true
+ENV REPORT_URL="https://api.opi.network/report_block"
+ENV REPORT_RETRIES=10
+ENV REPORT_NAME="opi_brc20_index"
+ENV CREATE_EXTRA_TABLES=true
+
+WORKDIR /app/modules/brc20_index
+# RUN ls -al
+RUN pip install python-dotenv psycopg2-binary json5 stdiomask requests && touch .env
+CMD ["python3", "brc20_index.py"]

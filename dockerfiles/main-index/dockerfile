@@ -1,0 +1,34 @@
+FROM rust as rust-builder
+
+WORKDIR /build
+ADD . .
+# RUN ls -al
+RUN cd ord && cargo fetch
+RUN cd ord && cargo build --release
+
+
+FROM node:lts-bookworm as main-indexer
+
+COPY --from=rust-builder /build /app
+
+VOLUME /bitcoin-data/
+
+ENV DB_USER="postgres"
+ENV DB_HOST="db"
+ENV DB_PORT=5432
+ENV DB_DATABASE="postgres"
+ENV DB_PASSWD=""
+ENV DB_SSL=true
+ENV DB_MAX_CONNECTIONS=50
+ENV BITCOIN_CHAIN_FOLDER="/bitcoin-data/"
+ENV BITCOIN_RPC_USER=""
+ENV BITCOIN_RPC_PASSWD=""
+ENV ORD_BINARY="./ord"
+ENV ORD_FOLDER="../../ord/target/release/"
+ENV ORD_DATADIR="."
+ENV NETWORK_TYPE="mainnet"
+
+WORKDIR /app/modules/main_index
+RUN npm install && touch .env
+# RUN ls -al
+CMD ["node", "index.js"]

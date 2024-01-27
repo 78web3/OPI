@@ -1,0 +1,59 @@
+version: '3'
+services:
+  db:
+    image: postgres:latest
+    networks:
+      - ${EXTERNAL_NETWORK_NAME}
+    volumes:
+      - ./dockerfiles/init-sql:/docker-entrypoint-initdb.d
+      - /data/postgres-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWD}
+      - POSTGRES_DB=${DB_DATABASE}
+
+  main-index:
+    image: darren9276/opi-main-index:2024.01.26
+    networks:
+      - ${EXTERNAL_NETWORK_NAME}
+    depends_on:
+      - db
+    environment:
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_DATABASE=${DB_DATABASE}
+      - DB_SSL=${DB_SSL}
+      - DB_USER=${DB_USER}
+      - DB_PASSWD=${DB_PASSWD}
+      - DB_MAX_CONNECTIONS=${DB_MAX_CONNECTIONS}
+      - BITCOIN_CHAIN_FOLDER=${BITCOIN_CHAIN_FOLDER}
+      - BITCOIN_RPC_USER=${BITCOIN_RPC_USER}
+      - BITCOIN_RPC_PASSWD=${BITCOIN_RPC_PASSWD}
+      - ORD_BINARY=${ORD_BINARY}
+      - ORD_FOLDER=${ORD_FOLDER}
+      - ORD_DATADIR=${ORD_DATADIR}
+      - NETWORK_TYPE=${NETWORK_TYPE}
+
+  brc20-index:
+    image: darren9276/opi-brc20-index:2024.01.26
+    networks:
+      - ${EXTERNAL_NETWORK_NAME}
+    depends_on:
+      - db
+    environment:
+      - DB_USER="postgres"
+      - DB_HOST="localhost"
+      - DB_PORT="5432"
+      - DB_DATABASE="postgres"
+      - DB_PASSWD=""
+      - DB_METAPROTOCOL_USER="postgres"
+      - DB_METAPROTOCOL_HOST="localhost"
+      - DB_METAPROTOCOL_PORT="5432"
+      - DB_METAPROTOCOL_DATABASE="postgres"
+      - DB_METAPROTOCOL_PASSWD=""
+      - NETWORK_TYPE="mainnet"
+      - REPORT_TO_INDEXER="true"
+      - REPORT_URL="https://api.opi.network/report_block"
+      - REPORT_RETRIES="10"
+      - REPORT_NAME="opi_brc20_index"
+      - CREATE_EXTRA_TABLES="true"
