@@ -6,7 +6,7 @@ services:
       - ${EXTERNAL_NETWORK_NAME}
     volumes:
       - ./dockerfiles/init-sql:/docker-entrypoint-initdb.d
-      - /data/postgres-data:/var/lib/postgresql/data
+      - ${PG_DATA_FOLDER}:/var/lib/postgresql/data
     environment:
       - POSTGRES_USER=${DB_USER}
       - POSTGRES_PASSWORD=${DB_PASSWD}
