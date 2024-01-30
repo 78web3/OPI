@@ -1,0 +1,13 @@
+FROM rust as rust-builder
+
+WORKDIR /build
+ADD . .
+# RUN ls -al
+RUN cd ord && cargo fetch
+RUN cd ord && cargo build --release
+
+RUN mkdir -p /app/ord
+
+VOLUME /app/ord/
+
+CMD ["cp", "-r", "/build/ord", "/app/ord"]

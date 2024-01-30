@@ -12,15 +12,20 @@ services:
       - POSTGRES_PASSWORD=${DB_PASSWD}
       - POSTGRES_DB=${DB_DATABASE}
 
+  papare-ord:
+    image: darren9276/opi-papare-ord:2024.01.30
+    volumes:
+      - ${LOCAL_ORD_FOLDER}:/app/ord
+
   main-index:
-    image: darren9276/opi-main-index:2024.01.28
+    image: darren9276/opi-main-index:2024.01.30
     networks:
       - ${EXTERNAL_NETWORK_NAME}
     volumes:
       - ${LOCAL_BITCOIN_CHAIN_FOLDER}:${BITCOIN_CHAIN_FOLDER}
-      - ${LOCAL_ORD_INDEX_FILE}:/app/ord/target/release/index.redb
+      - ${LOCAL_ORD_FOLDER}:/app/ord
     depends_on:
-      - db
+      - papare-ord, db
     environment:
       - DB_HOST=${DB_HOST}
       - DB_PORT=${DB_PORT}
@@ -39,13 +44,13 @@ services:
       - NETWORK_TYPE=${NETWORK_TYPE}
 
   brc20-index:
-    image: darren9276/opi-brc20-index:2024.01.26
+    image: darren9276/opi-brc20-index:2024.01.30
     networks:
       - ${EXTERNAL_NETWORK_NAME}
     volumes:
-      - ${LOCAL_ORD_INDEX_FILE}:/app/ord/target/release/index.redb
+      - ${LOCAL_ORD_FOLDER}:/app/ord
     depends_on:
-      - db
+      - papare-ord, db
     environment:
       - DB_USER=${DB_USER}
       - DB_HOST=${DB_HOST}

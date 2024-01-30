@@ -1,17 +1,19 @@
-FROM rust as rust-builder
+# FROM rust as rust-builder
 
-WORKDIR /build
+# WORKDIR /build
+# ADD . .
+# # RUN ls -al
+# RUN cd ord && cargo fetch
+# RUN cd ord && cargo build --release
+
+
+FROM python:bookworm 
+
+WORKDIR /app
+
 ADD . .
-# RUN ls -al
-RUN cd ord && cargo fetch
-RUN cd ord && cargo build --release
 
-
-FROM python:bookworm as brc20-indexer
-
-COPY --from=rust-builder /build /app
-
-VOLUME /app/ord/target/release/index.redb
+VOLUME /app/ord/
 
 ENV DB_USER="postgres"
 ENV DB_HOST="db"

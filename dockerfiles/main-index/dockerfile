@@ -1,18 +1,19 @@
-FROM rust as rust-builder
+# FROM rust as rust-builder
 
-WORKDIR /build
+# WORKDIR /build
+# ADD . .
+# # RUN ls -al
+# RUN cd ord && cargo fetch
+# RUN cd ord && cargo build --release
+
+FROM node:lts-bookworm
+
+WORKDIR /app
+
 ADD . .
-# RUN ls -al
-RUN cd ord && cargo fetch
-RUN cd ord && cargo build --release
-
-
-FROM node:lts-bookworm as main-indexer
-
-COPY --from=rust-builder /build /app
 
 VOLUME /bitcoin-data/
-VOLUME /app/ord/target/release/index.redb
+VOLUME /app/ord/
 
 ENV DB_USER="postgres"
 ENV DB_HOST="db"
