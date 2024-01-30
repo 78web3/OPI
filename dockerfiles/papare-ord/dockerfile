@@ -6,8 +6,8 @@ ADD . .
 RUN cd ord && cargo fetch
 RUN cd ord && cargo build --release
 
-RUN mkdir -p /app/ord
+RUN mkdir -p /app/ord/target
 
-VOLUME /app/ord/
+VOLUME /app/ord/target
 
-CMD ["cp", "-r", "/build/ord", "/app/ord"]
+CMD ["cp", "-r", "/build/ord/target", "/app/ord/target"]

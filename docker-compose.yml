@@ -15,7 +15,7 @@ services:
   papare-ord:
     image: darren9276/opi-papare-ord:2024.01.30
     volumes:
-      - ${LOCAL_ORD_FOLDER}:/app/ord
+      - ${LOCAL_ORD_FOLDER}:/app/ord/target
 
   main-index:
     image: darren9276/opi-main-index:2024.01.30
@@ -23,7 +23,7 @@ services:
       - ${EXTERNAL_NETWORK_NAME}
     volumes:
       - ${LOCAL_BITCOIN_CHAIN_FOLDER}:${BITCOIN_CHAIN_FOLDER}
-      - ${LOCAL_ORD_FOLDER}:/app/ord
+      - ${LOCAL_ORD_FOLDER}:/app/ord/target
     depends_on:
       - papare-ord
       - db
@@ -49,7 +49,7 @@ services:
     networks:
       - ${EXTERNAL_NETWORK_NAME}
     volumes:
-      - ${LOCAL_ORD_FOLDER}:/app/ord
+      - ${LOCAL_ORD_FOLDER}:/app/ord/target
     depends_on:
       - papare-ord
       - db

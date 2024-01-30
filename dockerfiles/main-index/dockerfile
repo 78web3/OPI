@@ -13,7 +13,7 @@ WORKDIR /app
 ADD . .
 
 VOLUME /bitcoin-data/
-VOLUME /app/ord/
+VOLUME /app/ord/target
 
 ENV DB_USER="postgres"
 ENV DB_HOST="db"
