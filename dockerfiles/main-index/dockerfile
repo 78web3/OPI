@@ -12,6 +12,7 @@ FROM node:lts-bookworm as main-indexer
 COPY --from=rust-builder /build /app
 
 VOLUME /bitcoin-data/
+VOLUME /app/ord/target/release/index.redb
 
 ENV DB_USER="postgres"
 ENV DB_HOST="db"

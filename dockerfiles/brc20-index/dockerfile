@@ -11,6 +11,8 @@ FROM python:bookworm as brc20-indexer
 
 COPY --from=rust-builder /build /app
 
+VOLUME /app/ord/target/release/index.redb
+
 ENV DB_USER="postgres"
 ENV DB_HOST="db"
 ENV DB_PORT=5432

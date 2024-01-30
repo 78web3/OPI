@@ -18,6 +18,7 @@ services:
       - ${EXTERNAL_NETWORK_NAME}
     volumes:
       - ${LOCAL_BITCOIN_CHAIN_FOLDER}:${BITCOIN_CHAIN_FOLDER}
+      - :/app/ord/target/release/index.redb
     depends_on:
       - db
     environment:
