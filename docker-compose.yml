@@ -25,7 +25,8 @@ services:
       - ${LOCAL_BITCOIN_CHAIN_FOLDER}:${BITCOIN_CHAIN_FOLDER}
       - ${LOCAL_ORD_FOLDER}:/app/ord
     depends_on:
-      - papare-ord, db
+      - papare-ord
+      - db
     environment:
       - DB_HOST=${DB_HOST}
       - DB_PORT=${DB_PORT}
@@ -50,7 +51,8 @@ services:
     volumes:
       - ${LOCAL_ORD_FOLDER}:/app/ord
     depends_on:
-      - papare-ord, db
+      - papare-ord
+      - db
     environment:
       - DB_USER=${DB_USER}
       - DB_HOST=${DB_HOST}
