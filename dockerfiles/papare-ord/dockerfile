@@ -10,4 +10,4 @@ RUN mkdir -p /app/ord/target
 
 VOLUME /app/ord/target
 
-CMD ["cp", "-r", "/build/ord/target", "/app/ord/target"]
+CMD ["cp", "-r", "/build/ord/target", "/app/ord/"]
