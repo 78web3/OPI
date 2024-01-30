@@ -18,7 +18,7 @@ services:
       - ${EXTERNAL_NETWORK_NAME}
     volumes:
       - ${LOCAL_BITCOIN_CHAIN_FOLDER}:${BITCOIN_CHAIN_FOLDER}
-      - :/app/ord/target/release/index.redb
+      - ${LOCAL_ORD_INDEX_FILE}:/app/ord/target/release/index.redb
     depends_on:
       - db
     environment:
@@ -42,6 +42,8 @@ services:
     image: darren9276/opi-brc20-index:2024.01.26
     networks:
       - ${EXTERNAL_NETWORK_NAME}
+    volumes:
+      - ${LOCAL_ORD_INDEX_FILE}:/app/ord/target/release/index.redb
     depends_on:
       - db
     environment:
