@@ -35,4 +35,4 @@ ENV CREATE_EXTRA_TABLES=true
 WORKDIR /app/modules/brc20_index
 # RUN ls -al
 RUN pip install python-dotenv psycopg2-binary json5 stdiomask requests && touch .env
-CMD ["python3", "brc20_index.py"]
+CMD ["python3", "-u", "brc20_index.py"]
