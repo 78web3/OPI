@@ -54,7 +54,7 @@ services:
       - NETWORK_TYPE=${NETWORK_TYPE}
 
   brc20-index:
-    image: darren9276/opi-brc20-index:2024.01.30-1
+    image: darren9276/opi-brc20-index:2024.02.01
     networks:
       - ${EXTERNAL_NETWORK_NAME}
     volumes:
