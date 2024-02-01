@@ -19,6 +19,13 @@ services:
     volumes:
       - ${LOCAL_ORD_FOLDER}:/app/ord/target
 
+  restore-data:
+    image: darren9276/opi-restore-data:2024.02.01
+    networks:
+      - ${EXTERNAL_NETWORK_NAME}
+    volumes:
+      - ${LOCAL_ORD_FOLDER}:/app/ord/target
+
   main-index:
     image: darren9276/opi-main-index:2024.01.30-1
     networks:

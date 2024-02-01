@@ -1,0 +1,43 @@
+FROM python:bookworm
+
+VOLUME /app/ord/target
+
+WORKDIR /app
+
+ADD . .
+
+RUN cp dockerfiles/restore-data/restore.sh /app/modules
+
+ENV DB_USER="postgres"
+ENV DB_HOST="db"
+ENV DB_PORT=5432
+ENV DB_DATABASE="postgres"
+ENV DB_PASSWD=""
+ENV DB_SSL=true
+ENV DB_MAX_CONNECTIONS=50
+ENV BITCOIN_CHAIN_FOLDER="/bitcoin-data/"
+ENV BITCOIN_RPC_USER=""
+ENV BITCOIN_RPC_PASSWD=""
+ENV BITCOIN_RPC_URL="127.0.0.1:8332"
+ENV ORD_BINARY="./ord"
+ENV ORD_FOLDER="../../ord/target/release/"
+ENV ORD_DATADIR="."
+ENV NETWORK_TYPE="mainnet"
+
+ENV DB_METAPROTOCOL_USER="postgres"
+ENV DB_METAPROTOCOL_HOST="db"
+ENV DB_METAPROTOCOL_PORT=5432
+ENV DB_METAPROTOCOL_DATABASE="postgres"
+ENV DB_METAPROTOCOL_PASSWD=""
+ENV REPORT_TO_INDEXER=true
+ENV REPORT_URL="https://api.opi.network/report_block"
+ENV REPORT_RETRIES=10
+ENV REPORT_NAME="opi_brc20_index"
+ENV CREATE_EXTRA_TABLES=true
+
+WORKDIR /app/modules
+
+RUN apt update && apt install -y postgresql-client-common postgresql-client pbzip2
+RUN pip install python-dotenv psycopg2-binary json5 stdiomask requests boto3 tqdm
+
+CMD ["bash", "restore.sh"]

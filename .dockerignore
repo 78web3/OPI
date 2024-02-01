@@ -1,0 +1,5 @@
+ord-data/
+postgresql-data/
+secret/
+.git/
+logs/
